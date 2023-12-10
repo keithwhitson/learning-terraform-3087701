@@ -67,7 +67,7 @@ module "blog_alb" {
       backend_port     = 80
       target_type      = "instance"
       tergets = {
-        target_id = aws_instance.blob.id
+        target_id = aws_instance.blog.id
         port      = 80
       }
     }
