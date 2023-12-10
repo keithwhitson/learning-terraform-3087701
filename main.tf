@@ -18,7 +18,7 @@ data "aws_vpc" "default" {
   default = true
 }
 
-module "vpc" {
+module "blog_vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
   name = "my-vpc"
@@ -43,7 +43,7 @@ vpc_security_group_ids = [module.blog_sg.security_group_id]
 
   #instance_type = "t3.nano"
  #subnet_id     = "subnet-0c3840e2c57a8b7c6"
- subnet_id = module.blog.vpc.public_subnets[0]
+ subnet_id = module.blog_vpc.public_subnets[0]
   tags = {
     Name = "HelloWorld"
   }
@@ -54,7 +54,7 @@ module "blog_sg" {
   version = "5.1.0"
   name = "blog_new"
 
-  vpc_id              = module.blog.vpc.vpc_id
+  vpc_id              = module.blog_vpc.vpc_id
 
 
   ingress_rules       = ["http-80-tcp","https-443-tcp"]
