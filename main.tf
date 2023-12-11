@@ -33,20 +33,6 @@ module "blog_vpc" {
   }
 }
 
-resource "aws_instance" "blog" {
-  ami           = data.aws_ami.app_ami.id
-  instance_type=var.instance_type
-
-vpc_security_group_ids = [module.blog_sg.security_group_id]
-
-  #instance_type = "t3.nano"
- #subnet_id     = "subnet-0c3840e2c57a8b7c6"
- subnet_id = module.blog_vpc.public_subnets[0]
-  tags = {
-    Name = "HelloWorld"
-  }
-}
-
 module "autoscaling" {
   source  = "terraform-aws-modules/autoscaling/aws"
   version = "7.3.1"
@@ -60,7 +46,7 @@ module "autoscaling" {
 
   security_groups  = [module.blog_sg.security_group_id]
   
-  ami            = data.aws_ami.app_ami.id
+  image_id            = data.aws_ami.app_ami.id
   instance_type  = var.instance_type
 
 
