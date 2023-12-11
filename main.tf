@@ -59,6 +59,10 @@ module "blog_alb" {
   subnets            = module.blog_vpc.public_subnets
   security_groups    = [module.blog_sg.security_group_id]
 
+  acces_logs = {
+    bucket = "my-alb-logs"
+  }
+
   target_groups = [
     {
       name_prefix      = "blog-"
@@ -84,6 +88,11 @@ module "blog_alb" {
     Environment = "dev"
   }
 }
+
+
+
+
+
 
 module "blog_sg" {
   source  = "terraform-aws-modules/security-group/aws"
